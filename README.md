@@ -7,6 +7,12 @@
 
 
 ## How to use
+### Docker compose up
+```
+cd docker-infra
+docker compose up -d
+```
+
 ### Register connector to connect
 ```
 curl -X POST -H "Content-Type: application/json" --data @config.json http://localhost:8083/connectors
