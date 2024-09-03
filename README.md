@@ -37,6 +37,9 @@ curl -X POST -H "Content-Type: application/json" --data @config.json http://loca
         "transforms": "outbox",
         "transforms.outbox.type": "com.eunoia.transactionoutbox.smt.EunoiaTransformation",
         "transforms.outbox.table.expand.json.payload": true
+        // Not use schema
+        "value.converter": "org.apache.kafka.connect.json.JsonConverter",
+        "value.converter.schemas.enable": "false"
     }
 }
 ```
