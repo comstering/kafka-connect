@@ -34,6 +34,7 @@ curl -X POST -H "Content-Type: application/json" --data @config.json http://loca
         "schema.history.internal.kafka.bootstrap.servers": "kafka1:19091,kafka2:19092,kafka3:19093",
         "schema.history.internal.kafka.topic": "schemahistory.fullfillment",
         "include.schema.changes": false,
+        // transform
         "transforms": "outbox",
         "transforms.outbox.type": "com.eunoia.transactionoutbox.smt.EunoiaTransformation",
         "transforms.outbox.table.expand.json.payload": true
