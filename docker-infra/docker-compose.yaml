@@ -9,8 +9,8 @@ services:
       ZOO_MY_ID: 1
       ZOO_PORT: 2181
     volumes:
-      - ~/data/zookeeper/data:/data
-      - ~/data/zookeeper/datalog:/datalog
+      - ./data/zookeeper/data:/data
+      - ./data/zookeeper/datalog:/datalog
 
   kafka1:
     image: confluentinc/cp-kafka:7.7.0
@@ -25,7 +25,7 @@ services:
       KAFKA_INTER_BROKER_LISTENER_NAME: LISTENER_DOCKER_INTERNAL
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
     volumes:
-      - ~/data/kafka1/data:/tmp/kafka-logs
+      - ./data/kafka1/data:/tmp/kafka-logs
     depends_on:
       - zookeeper
   
@@ -42,7 +42,7 @@ services:
       KAFKA_INTER_BROKER_LISTENER_NAME: LISTENER_DOCKER_INTERNAL
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
     volumes:
-      - ~/data/kafka2/data:/tmp/kafka-logs
+      - ./data/kafka2/data:/tmp/kafka-logs
     depends_on:
       - zookeeper
 
@@ -59,7 +59,7 @@ services:
       KAFKA_INTER_BROKER_LISTENER_NAME: LISTENER_DOCKER_INTERNAL
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
     volumes:
-      - ~/data/kafka3/data:/tmp/kafka-logs
+      - ./data/kafka3/data:/tmp/kafka-logs
     depends_on:
       - zookeeper
 
