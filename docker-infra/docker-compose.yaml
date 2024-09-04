@@ -95,6 +95,7 @@ services:
       - "8080:8080"
     environment:
       KAFKA_BROKERS: kafka1:19091,kafka2:19092,kafka3:19093
+      CONFIG_FILEPATH: /etc/redpanda/redpanda-console-config.yaml
     volumes:
       - ./redpanda:/etc/redpanda
     depends_on:
