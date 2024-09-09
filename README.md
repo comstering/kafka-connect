@@ -21,7 +21,7 @@ curl -X POST -H "Content-Type: application/json" --data @config.json http://loca
 ### config.json
 ```
 {
-    "name": "mysql-connect",
+    "name": "default-connect",
     "config": {
         "connector.class" : "io.debezium.connector.mysql.MySqlConnector",
         "database.hostname": "hansu-sandbox-db-instance-1.crcikgmci55c.ap-northeast-2.rds.amazonaws.com",
@@ -33,14 +33,7 @@ curl -X POST -H "Content-Type: application/json" --data @config.json http://loca
         "table.include.list": "kafka_connect.outbox_debezium",
         "schema.history.internal.kafka.bootstrap.servers": "kafka1:19091,kafka2:19092,kafka3:19093",
         "schema.history.internal.kafka.topic": "schemahistory.fullfillment",
-        "include.schema.changes": false,
-        // transform
-        "transforms": "outbox",
-        "transforms.outbox.type": "com.eunoia.transactionoutbox.smt.EunoiaTransformation",
-        "transforms.outbox.table.expand.json.payload": true
-        // Not use schema
-        "value.converter": "org.apache.kafka.connect.json.JsonConverter",
-        "value.converter.schemas.enable": "false"
+        "include.schema.changes": true
     }
 }
 ```
