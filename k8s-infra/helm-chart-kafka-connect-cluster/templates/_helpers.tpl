@@ -1,7 +1,7 @@
 {{/*
 Expand the name of the chart.
 */}}
-{{- define "helm-chart-kafka-connect-cluster.name" -}}
+{{- define "kafka-connect-cluster.name" -}}
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
@@ -10,7 +10,7 @@ Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 If release name contains chart name it will be used as a full name.
 */}}
-{{- define "helm-chart-kafka-connect-cluster.fullname" -}}
+{{- define "kafka-connect-cluster.fullname" -}}
 {{- if .Values.fullnameOverride }}
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
@@ -26,16 +26,16 @@ If release name contains chart name it will be used as a full name.
 {{/*
 Create chart name and version as used by the chart label.
 */}}
-{{- define "helm-chart-kafka-connect-cluster.chart" -}}
+{{- define "kafka-connect-cluster.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
 Common labels
 */}}
-{{- define "helm-chart-kafka-connect-cluster.labels" -}}
-helm.sh/chart: {{ include "helm-chart-kafka-connect-cluster.chart" . }}
-{{ include "helm-chart-kafka-connect-cluster.selectorLabels" . }}
+{{- define "kafka-connect-cluster.labels" -}}
+helm.sh/chart: {{ include "kafka-connect-cluster.chart" . }}
+{{ include "kafka-connect-cluster.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
@@ -45,17 +45,17 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{/*
 Selector labels
 */}}
-{{- define "helm-chart-kafka-connect-cluster.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "helm-chart-kafka-connect-cluster.name" . }}
+{{- define "kafka-connect-cluster.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "kafka-connect-cluster.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
 Create the name of the service account to use
 */}}
-{{- define "helm-chart-kafka-connect-cluster.serviceAccountName" -}}
+{{- define "kafka-connect-cluster.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create }}
-{{- default (include "helm-chart-kafka-connect-cluster.fullname" .) .Values.serviceAccount.name }}
+{{- default (include "kafka-connect-cluster.fullname" .) .Values.serviceAccount.name }}
 {{- else }}
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
