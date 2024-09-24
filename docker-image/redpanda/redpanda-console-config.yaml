@@ -1,0 +1,5 @@
+connect:
+  enabled: true
+  clusters:
+    - name: connect-cluster
+      url: http://kafka-connect:8083
