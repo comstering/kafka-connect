@@ -6,5 +6,7 @@ metadata:
 spec:
   accessModes:
     - ReadOnlyMany
-    -
-  volumeName:
+  resources:
+    requests:
+      storage: 10Gi
+  storageClassName: ""
