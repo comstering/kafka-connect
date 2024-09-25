@@ -108,3 +108,9 @@ affinity: {}
 kafkaConnect:
   data:
     CONNECT_BOOTSTRAP_SERVERS: "kafka-broker-url"
+
+pvc:
+  accessModes:
+    - ReadOnlyMany
+  storage: 10Gi
+  storageClassName: ""
