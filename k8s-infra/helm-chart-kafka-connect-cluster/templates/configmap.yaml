@@ -2,6 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: {{ include "kafka-connect-cluster.fullname" . }}
+  namespace: {{ .Values.namespace }}
   labels:
     {{- include "kafka-connect-cluster.labels" . | nindent 4 }}
 data:
@@ -16,3 +17,6 @@ data:
   CONNECT_INTERNAL_VALUE_CONVERTER: "org.apache.kafka.connect.json.JsonConverter"
   CONNECT_REST_ADVERTISED_HOST_NAME: "kafka-connect"
   CONNECT_PLUGIN_PATH: "/usr/share/java/kafka,/usr/share/confluent-hub-components,/data/connect-jars,/usr/share/java/kafka/debezium-connector-mysql"
+  {{- with .Values.kafkaConnect.data }}
+    {{ toYaml . | nindent 2 }}
+  {{- end }}
