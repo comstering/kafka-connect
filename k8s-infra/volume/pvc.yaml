@@ -2,7 +2,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: kafka-connect-pvc
-  namespace: kafka-connect
+  namespace: kafka-system
 spec:
   accessModes:
     - ReadOnlyMany

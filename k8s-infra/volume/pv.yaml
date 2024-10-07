@@ -9,12 +9,12 @@ spec:
     - ReadOnlyMany
   claimRef:
     name: kafka-connect-pvc
-    namespace: kafka-connect
+    namespace: kafka-system
   mountOptions:
     - hard
     - nolock
   nfs:
-    path: /kafka-connect-storage
-    server: 10.0.0.211
+    path: /kafka-connect-plugin-storage
+    server: 10.0.0.14
     readOnly: true
   persistentVolumeReclaimPolicy: Retain
