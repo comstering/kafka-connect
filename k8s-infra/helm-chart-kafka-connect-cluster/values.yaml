@@ -72,7 +72,7 @@ autoscaling:
 volumes:
   - name: kafka-system-plugin-volume
     persistentVolumeClaim:
-      claimName: kafka-system-pvc-plugin
+      claimName: kafka-system-plugin-pvc
 # - name: foo
 #   secret:
 #     secretName: mysecret

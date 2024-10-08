@@ -82,7 +82,7 @@ readinessProbe:
 volumes:
   - name: kafka-system-redpanda-volume
     persistentVolumeClaim:
-      claimName: kafka-system-pvc-redpanda
+      claimName: kafka-system-redpanda-pvc
 # - name: foo
 #   secret:
 #     secretName: mysecret
