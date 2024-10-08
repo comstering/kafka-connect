@@ -104,7 +104,7 @@ tolerations: []
 affinity: {}
 
 kafka:
-  brokers: "b-2.hansumsk.qex0ag.c2.kafka.ap-northeast-2.amazonaws.com:9098,b-3.hansumsk.qex0ag.c2.kafka.ap-northeast-2.amazonaws.com:9098,b-1.hansumsk.qex0ag.c2.kafka.ap-northeast-2.amazonaws.com:9098"
+  brokers: "b-3.hansumsk.yrpuyf.c2.kafka.ap-northeast-2.amazonaws.com:9098,b-1.hansumsk.yrpuyf.c2.kafka.ap-northeast-2.amazonaws.com:9098,b-2.hansumsk.yrpuyf.c2.kafka.ap-northeast-2.amazonaws.com:9098"
 
 pv:
   name: kafka-system-redpanda-pv

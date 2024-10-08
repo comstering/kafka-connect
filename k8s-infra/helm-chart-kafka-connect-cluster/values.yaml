@@ -95,7 +95,7 @@ affinity: {}
 
 kafkaConnect:
   data:
-    CONNECT_BOOTSTRAP_SERVERS: "b-2.hansumsk.qex0ag.c2.kafka.ap-northeast-2.amazonaws.com:9098,b-3.hansumsk.qex0ag.c2.kafka.ap-northeast-2.amazonaws.com:9098,b-1.hansumsk.qex0ag.c2.kafka.ap-northeast-2.amazonaws.com:9098"
+    CONNECT_BOOTSTRAP_SERVERS: "b-3.hansumsk.yrpuyf.c2.kafka.ap-northeast-2.amazonaws.com:9098,b-1.hansumsk.yrpuyf.c2.kafka.ap-northeast-2.amazonaws.com:9098,b-2.hansumsk.yrpuyf.c2.kafka.ap-northeast-2.amazonaws.com:9098"
     SECURITY_PROTOCOL: "SASL_SSL"
     SASL_MECHANISM: "AWS_MSK_IAM"
     SASL_CLIENT_CALLBACK_HANDLER_CLASS: "software.amazon.msk.auth.iam.IAMClientCallbackHandler"
