@@ -8,5 +8,3 @@ metadata:
 data:
   KAFKA_BROKERS: "{{ .Values.kafka.brokers }}"
   CONFIG_FILEPATH: "/etc/redpanda/redpanda-console-config.yaml"
-  FETCH_MAX_BYTES: "524288000"
-  MAX_PARTITION_FETCH_BYTES: "524288000"
