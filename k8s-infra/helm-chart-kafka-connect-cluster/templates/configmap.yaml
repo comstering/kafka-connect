@@ -17,6 +17,6 @@ data:
   CONNECT_INTERNAL_VALUE_CONVERTER: "org.apache.kafka.connect.json.JsonConverter"
   CONNECT_REST_ADVERTISED_HOST_NAME: "kafka-connect"
   CONNECT_PLUGIN_PATH: "/usr/share/java/kafka,/usr/share/confluent-hub-components,/data/connect-jars,/usr/share/java/kafka/custom-plugin"
-  {{- with .Values.kafkaConnect.data }}
+  {{- with .Values.kafkaConnect.env.data }}
     {{ toYaml . | nindent 2 }}
   {{- end }}

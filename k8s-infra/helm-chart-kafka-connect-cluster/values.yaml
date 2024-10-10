@@ -73,6 +73,9 @@ volumes:
   - name: kafka-system-plugin-volume
     persistentVolumeClaim:
       claimName: kafka-system-plugin-pvc
+  - name: kafka-system-msk-auth-volume
+    persistentVolumeClaim:
+      claimName: kafka-system-msk-auth-pvc
 # - name: foo
 #   secret:
 #     secretName: mysecret
@@ -82,6 +85,9 @@ volumes:
 volumeMounts:
   - mountPath: /usr/share/java/kafka/custom-plugin
     name: kafka-system-plugin-volume
+    readOnly: true
+  - mountPath: /etc/kafka-connect/jars
+    name: kafka-system-msk-auth-volume
     readOnly: true
 # - name: foo
 #   mountPath: "/etc/foo"
@@ -94,27 +100,45 @@ tolerations: []
 affinity: {}
 
 kafkaConnect:
-  data:
-    CONNECT_BOOTSTRAP_SERVERS: "b-3.hansumsk.yrpuyf.c2.kafka.ap-northeast-2.amazonaws.com:9098,b-1.hansumsk.yrpuyf.c2.kafka.ap-northeast-2.amazonaws.com:9098,b-2.hansumsk.yrpuyf.c2.kafka.ap-northeast-2.amazonaws.com:9098"
-    SECURITY_PROTOCOL: "SASL_SSL"
-    SASL_MECHANISM: "AWS_MSK_IAM"
-    SASL_CLIENT_CALLBACK_HANDLER_CLASS: "software.amazon.msk.auth.iam.IAMClientCallbackHandler"
-    SASL_JAAS_CONFIG: "software.amazon.msk.auth.iam.IAMLoginModule required;"
-
-pv:
-  name: kafka-system-plugin-pv
-  accessModes:
-    - ReadOnlyMany
-  storage: 10Gi
-  mountOptions:
-    - hard
-    - nolock
-  path: /kafka-system-plugin
-  server: 10.0.0.21
-
-pvc:
-  name: kafka-system-plugin-pvc
-  accessModes:
-    - ReadOnlyMany
-  storage: 10Gi
-  storageClassName: ""
+  env:
+    data:
+      CONNECT_BOOTSTRAP_SERVERS: "b-3.hansumsk.yrpuyf.c2.kafka.ap-northeast-2.amazonaws.com:9098,b-1.hansumsk.yrpuyf.c2.kafka.ap-northeast-2.amazonaws.com:9098,b-2.hansumsk.yrpuyf.c2.kafka.ap-northeast-2.amazonaws.com:9098"
+      CONNECT_SECURITY_PROTOCOL: "SASL_SSL"
+      CONNECT_SASL_MECHANISM: "AWS_MSK_IAM"
+      CONNECT_SASL_JAAS_CONFIG: "software.amazon.msk.auth.iam.IAMLoginModule required;"
+      CONNECT_SASL_CLIENT_CALLBACK_HANDLER_CLASS: "software.amazon.msk.auth.iam.IAMClientCallbackHandler"
+      CUB_CLASSPATH: "/usr/share/java/cp-base-new/*:/etc/kafka-connect/jars/*"
+  plugin:
+    pv:
+      name: kafka-system-plugin-pv
+      accessModes:
+        - ReadOnlyMany
+      storage: 10Gi
+      mountOptions:
+        - hard
+        - nolock
+      path: /kafka-system-plugin
+      server: 10.0.0.21
+    pvc:
+      name: kafka-system-plugin-pvc
+      accessModes:
+        - ReadOnlyMany
+      storage: 10Gi
+      storageClassName: ""
+  mskAuth:
+    pv:
+      name: kafka-system-msk-auth-pv
+      accessModes:
+        - ReadOnlyMany
+      storage: 10Gi
+      mountOptions:
+        - hard
+        - nolock
+      path: /kafka-system-msk-auth
+      server: 10.0.0.21
+    pvc:
+      name: kafka-system-msk-auth-pvc
+      accessModes:
+        - ReadOnlyMany
+      storage: 10Gi
+      storageClassName: ""
