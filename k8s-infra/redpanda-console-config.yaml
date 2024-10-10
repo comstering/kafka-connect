@@ -1,0 +1,12 @@
+kafka:
+  sasl:
+    enabled: true
+    mechanism: AWS_MSK_IAM
+  tls:
+    enabled: true
+
+connect:
+  enabled: true
+  clusters:
+    - name: connect-cluster
+      url: http://kafka-connect-cluster.kafka-system.svc.cluster.local
