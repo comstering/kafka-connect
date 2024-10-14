@@ -37,6 +37,15 @@ spec:
           ports:
             - containerPort: {{ .Values.service.containerPort }}
               protocol: TCP
+          env:
+            - name: CONNECT_REST_ADVERTISED_HOST_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+            - name: CONNECT_CLIENT_ID
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
           envFrom:
             - configMapRef:
                 name: {{ include "kafka-connect-cluster.fullname" . }}
