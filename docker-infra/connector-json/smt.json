@@ -1,0 +1,20 @@
+{
+  "connector.class": "io.debezium.connector.mysql.MySqlConnector",
+  "database.hostname": "hansu-aurora-rds.cluster-crcikgmci55c.ap-northeast-2.rds.amazonaws.com",
+  "database.password": "KafkaConnect!",
+  "database.port": "3306",
+  "database.server.id": "184054",
+  "database.user": "kafka_connect",
+  "include.schema.changes": "false",
+  "key.converter": "org.apache.kafka.connect.json.JsonConverter",
+  "key.converter.json.schemas.enable": "true",
+  "key.converter.schemas.enable": "true",
+  "name": "first-connect",
+  "schema.history.internal.kafka.bootstrap.servers": "b-3.hansumsk.yrpuyf.c2.kafka.ap-northeast-2.amazonaws.com:9098,b-1.hansumsk.yrpuyf.c2.kafka.ap-northeast-2.amazonaws.com:9098,b-2.hansumsk.yrpuyf.c2.kafka.ap-northeast-2.amazonaws.com:9098",
+  "schema.history.internal.kafka.topic": "schemahistory.first-connect",
+  "table.include.list": "hansu.outbox",
+  "topic.prefix": "first-connect",
+  "transforms": "outbox",
+  "transforms.outbox.type": "com.eunoia.kafka.connect.smt.mysql.EunoiaOutboxTransformation",
+  "value.converter": "org.apache.kafka.connect.json.JsonConverter"
+}
