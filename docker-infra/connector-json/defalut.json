@@ -1,25 +1,36 @@
 {
   "name": "debezium-mysql-connector-first",
   "connector.class": "io.debezium.connector.mysql.MySqlConnector",
+  "tasks.max": 1,
+
   "database.hostname": "hansu-aurora-rds.cluster-crcikgmci55c.ap-northeast-2.rds.amazonaws.com",
-  "database.password": "KafkaConnect!",
-  "database.port": 3306,
-  "database.server.id": 184054,
+  // "database.port": 3306, -> default value: 3306
   "database.user": "kafka_connect",
-  "snapshot.mode": "initial",
-  "include.schema.changes": true,
-  "table.include.list": "hansu.outbox",
+  "database.password": "KafkaConnect!",
   "topic.prefix": "debeziumfirst",
-  "schema.history.internal": "none",
-//  "schema.history.internal.kafka.topic": "schemahistory.debeziumfirst",
-//  "schema.history.internal.producer.sasl.mechanism": "AWS_MSK_IAM",
-//  "schema.history.internal.consumer.sasl.mechanism": "AWS_MSK_IAM",
-//  "schema.history.internal.consumer.security.protocol": "SASL_SSL",
-//  "schema.history.internal.producer.security.protocol": "SASL_SSL",
-//  "schema.history.internal.producer.sasl.jaas.config": "software.amazon.msk.auth.iam.IAMLoginModule required;",
-//  "schema.history.internal.consumer.sasl.jaas.config": "software.amazon.msk.auth.iam.IAMLoginModule required;",
-//  "schema.history.internal.consumer.sasl.client.callback.handler.class": "software.amazon.msk.auth.iam.IAMClientCallbackHandler",
-//  "schema.history.internal.producer.sasl.client.callback.handler.class": "software.amazon.msk.auth.iam.IAMClientCallbackHandler",
+  "database.server.id": 100001,
+  "table.include.list": "hansu.outbox",  // database.include.list: 특정 데이터베이스 전체를 읽을 때
+  // "include.schema.changes": true, -> default value: true
+
+  "snapshot.mode": "when_needed",
+  "snapshot.locking.mode": "none",
+
+  "schema.history.internal.kafka.topic": "schemahistory.debeziumfirst",
+  "schema.history.internal.kafka.bootstrap.servers": "b-3.hansumsk.yrpuyf.c2.kafka.ap-northeast-2.amazonaws.com:9098,b-1.hansumsk.yrpuyf.c2.kafka.ap-northeast-2.amazonaws.com:9098,b-2.hansumsk.yrpuyf.c2.kafka.ap-northeast-2.amazonaws.com:9098",
+  "schema.history.internal.producer.security.protocol": "SASL_SSL",
+  "schema.history.internal.consumer.security.protocol": "SASL_SSL",
+  "schema.history.internal.producer.sasl.mechanism": "AWS_MSK_IAM",
+  "schema.history.internal.consumer.sasl.mechanism": "AWS_MSK_IAM",
+  "schema.history.internal.producer.sasl.jaas.config": "software.amazon.msk.auth.iam.IAMLoginModule required;",
+  "schema.history.internal.consumer.sasl.jaas.config": "software.amazon.msk.auth.iam.IAMLoginModule required;",
+  "schema.history.internal.producer.sasl.client.callback.handler.class": "software.amazon.msk.auth.iam.IAMClientCallbackHandler",
+  "schema.history.internal.consumer.sasl.client.callback.handler.class": "software.amazon.msk.auth.iam.IAMClientCallbackHandler",
+
+  "key.converter": "org.apache.kafka.connect.json.JsonConverter",
+  "value.converter": "org.apache.kafka.connect.json.JsonConverter",
+  "key.converter.schemas.enable": false,
+  "value.converter.schemas.enable": false,
+
   "errors.log.enable": true,
   "errors.log.include.messages": true
 }
