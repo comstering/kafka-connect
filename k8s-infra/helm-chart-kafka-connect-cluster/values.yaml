@@ -64,7 +64,7 @@ readinessProbe:
     port: 8083
 
 autoscaling:
-  minReplicas: 2
+  minReplicas: 1
   maxReplicas: 100
   targetMemoryUtilizationPercentage: 80
 
@@ -107,7 +107,14 @@ kafkaConnect:
       CONNECT_SASL_MECHANISM: "AWS_MSK_IAM"
       CONNECT_SASL_JAAS_CONFIG: "software.amazon.msk.auth.iam.IAMLoginModule required;"
       CONNECT_SASL_CLIENT_CALLBACK_HANDLER_CLASS: "software.amazon.msk.auth.iam.IAMClientCallbackHandler"
-      CUB_CLASSPATH: "/usr/share/java/cp-base-new/*:/etc/kafka-connect/jars/*"
+      CONNECT_PRODUCER_SECURITY_PROTOCOL: "SASL_SSL"
+      CONNECT_PRODUCER_SASL_MECHANISM: "AWS_MSK_IAM"
+      CONNECT_PRODUCER_SASL_JAAS_CONFIG: "software.amazon.msk.auth.iam.IAMLoginModule required;"
+      CONNECT_PRODUCER_SASL_CLIENT_CALLBACK_HANDLER_CLASS: "software.amazon.msk.auth.iam.IAMClientCallbackHandler"
+      CONNECT_CONSUMER_SECURITY_PROTOCOL: "SASL_SSL"
+      CONNECT_CONSUMER_SASL_MECHANISM: "AWS_MSK_IAM"
+      CONNECT_CONSUMER_SASL_JAAS_CONFIG: "software.amazon.msk.auth.iam.IAMLoginModule required;"
+      CONNECT_CONSUMER_SASL_CLIENT_CALLBACK_HANDLER_CLASS: "software.amazon.msk.auth.iam.IAMClientCallbackHandler"
   plugin:
     pv:
       name: kafka-system-plugin-pv
