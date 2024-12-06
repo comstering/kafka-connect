@@ -1,0 +1,51 @@
+{{- if .Values.istio.ingress.enabled -}}
+{{- $fullName := include "redpanda-console.fullname" . -}}
+{{- $namespace := .Values.namespace -}}
+{{- $servicePort := .Values.service.port -}}
+apiVersion: networking.istio.io/v1
+kind: Gateway
+metadata:
+  name: "{{ $fullName }}-gw"
+  {{- with .Values.istio.ingress.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  selector:
+    istio: {{ .Values.istio.ingress.selector }}
+  servers:
+    - port:
+        number: 80
+        name: http
+        protocol: HTTP2
+      hosts:
+        - "redpanda-console.oy-global-sandbox.com"
+      tls:
+        httpsRedirect: true
+    - port:
+        number: 443
+        name: https
+        protocol: HTTP2
+      hosts:
+        - "redpanda-console.oy-global-sandbox.com"
+
+---
+apiVersion: networking.istio.io/v1
+kind: VirtualService
+metadata:
+  name: "{{ $fullName }}-vs"
+spec:
+  hosts:
+    - "redpanda-console.oy-global-sandbox.com"
+  gateways:
+    - "{{ $fullName }}-gw"
+  http:
+    - match:
+        - uri:
+            prefix: /
+      route:
+        - destination:
+            host: "{{ $fullName }}.{{ $namespace }}.svc.cluster.local"
+            port:
+              number: {{ $servicePort }}
+{{- end }}
