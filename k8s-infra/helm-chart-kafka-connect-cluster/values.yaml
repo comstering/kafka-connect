@@ -52,16 +52,18 @@ resources:
     memory: 2Gi
   requests:
     cpu: 0.5
-    memory: 1Gi
+    memory: 2Gi
 
 livenessProbe:
   httpGet:
     path: /
     port: 8083
+  initialDelaySeconds: 60
 readinessProbe:
   httpGet:
     path: /
     port: 8083
+  initialDelaySeconds: 60
 
 autoscaling:
   minReplicas: 1
@@ -73,9 +75,6 @@ volumes:
   - name: kafka-system-plugin-volume
     persistentVolumeClaim:
       claimName: kafka-system-plugin-pvc
-  - name: kafka-system-msk-auth-volume
-    persistentVolumeClaim:
-      claimName: kafka-system-msk-auth-pvc
 # - name: foo
 #   secret:
 #     secretName: mysecret
@@ -83,11 +82,12 @@ volumes:
 
 # Additional volumeMounts on the output Deployment definition.
 volumeMounts:
-  - mountPath: /usr/share/java/kafka/custom-plugin
+  - mountPath: /usr/share/java/kafka/plugins
     name: kafka-system-plugin-volume
     readOnly: true
   - mountPath: /etc/kafka-connect/jars
-    name: kafka-system-msk-auth-volume
+    name: kafka-system-plugin-volume
+    subPath: kafka-jars
     readOnly: true
 # - name: foo
 #   mountPath: "/etc/foo"
@@ -102,7 +102,8 @@ affinity: {}
 kafkaConnect:
   env:
     data:
-      CONNECT_BOOTSTRAP_SERVERS: "b-3.hansumsk.yrpuyf.c2.kafka.ap-northeast-2.amazonaws.com:9098,b-1.hansumsk.yrpuyf.c2.kafka.ap-northeast-2.amazonaws.com:9098,b-2.hansumsk.yrpuyf.c2.kafka.ap-northeast-2.amazonaws.com:9098"
+      CONNECT_PLUGIN_PATH: "/usr/share/java/kafka,/usr/share/confluent-hub-components,/usr/share/java/kafka/plugins/aws-msk-auth-plugin,/usr/share/java/kafka/plugins/debezium-mysql-plugin,/usr/share/java/kafka/plugins/aws-secretsmanager-plugin,/usr/share/java/kafka/plugins/snowflake-plugin,/usr/share/java/kafka/plugins/custom-plugin"
+      CONNECT_BOOTSTRAP_SERVERS: "b-3.hansumsk.2wxk5a.c2.kafka.ap-northeast-2.amazonaws.com:9098,b-1.hansumsk.2wxk5a.c2.kafka.ap-northeast-2.amazonaws.com:9098,b-2.hansumsk.2wxk5a.c2.kafka.ap-northeast-2.amazonaws.com:9098"
       CONNECT_SECURITY_PROTOCOL: "SASL_SSL"
       CONNECT_SASL_MECHANISM: "AWS_MSK_IAM"
       CONNECT_SASL_JAAS_CONFIG: "software.amazon.msk.auth.iam.IAMLoginModule required;"
@@ -115,6 +116,8 @@ kafkaConnect:
       CONNECT_CONSUMER_SASL_MECHANISM: "AWS_MSK_IAM"
       CONNECT_CONSUMER_SASL_JAAS_CONFIG: "software.amazon.msk.auth.iam.IAMLoginModule required;"
       CONNECT_CONSUMER_SASL_CLIENT_CALLBACK_HANDLER_CLASS: "software.amazon.msk.auth.iam.IAMClientCallbackHandler"
+      CONNECT_CONFIG_PROVIDERS: "secretsmanager"
+      CONNECT_CONFIG_PROVIDERS_SECRETSMANAGER_CLASS: "io.confluent.csid.config.provider.aws.SecretsManagerConfigProvider"
   plugin:
     pv:
       name: kafka-system-plugin-pv
@@ -124,27 +127,10 @@ kafkaConnect:
       mountOptions:
         - hard
         - nolock
-      path: /kafka-system-plugin
-      server: 10.0.0.21
+      path: /hansu-kakfa-connector-plugin
+      server: 10.0.0.4
     pvc:
       name: kafka-system-plugin-pvc
-      accessModes:
-        - ReadOnlyMany
-      storage: 10Gi
-      storageClassName: ""
-  mskAuth:
-    pv:
-      name: kafka-system-msk-auth-pv
-      accessModes:
-        - ReadOnlyMany
-      storage: 10Gi
-      mountOptions:
-        - hard
-        - nolock
-      path: /kafka-system-msk-auth
-      server: 10.0.0.21
-    pvc:
-      name: kafka-system-msk-auth-pvc
       accessModes:
         - ReadOnlyMany
       storage: 10Gi

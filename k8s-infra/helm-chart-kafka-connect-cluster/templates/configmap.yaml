@@ -7,6 +7,7 @@ metadata:
     {{- include "kafka-connect-cluster.labels" . | nindent 4 }}
 data:
   CONNECT_GROUP_ID: "kafka-connect"
+  CONNECT_LOG_TOPIC: "__redpanda.connectors_logs"
   CONNECT_CONFIG_STORAGE_TOPIC: "_connect-configs"
   CONNECT_OFFSET_STORAGE_TOPIC: "_connect-offsets"
   CONNECT_STATUS_STORAGE_TOPIC: "_connect-status"
@@ -14,7 +15,6 @@ data:
   CONNECT_VALUE_CONVERTER: "org.apache.kafka.connect.json.JsonConverter"
   CONNECT_INTERNAL_KEY_CONVERTER: "org.apache.kafka.connect.json.JsonConverter"
   CONNECT_INTERNAL_VALUE_CONVERTER: "org.apache.kafka.connect.json.JsonConverter"
-  CONNECT_PLUGIN_PATH: "/usr/share/java/kafka,/usr/share/confluent-hub-components,/usr/share/java/kafka/custom-plugin"
   CONNECT_ERRORS_LOG_ENABLE: "true"
   CONNECT_ERRORS_LOG_INCLUDE_MESSAGES: "true"
   CUB_CLASSPATH: "/usr/share/java/cp-base-new/*:/etc/kafka-connect/jars/*"
